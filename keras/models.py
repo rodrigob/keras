@@ -396,6 +396,10 @@ class Sequential(Model, containers.Sequential):
             test_ins = [self.X_test, self.y, self.weights]
             predict_ins = [self.X_test]
 
+        # expose for external optimizer
+        self._train_ins = train_ins
+        self._train_loss = train_loss
+
         self._train = theano.function(train_ins, train_loss, updates=updates,
                                       allow_input_downcast=True, mode=theano_mode)
         self._train_with_acc = theano.function(train_ins, [train_loss, train_accuracy], updates=updates,
